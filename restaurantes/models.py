@@ -1,7 +1,7 @@
 from django.db import models
 from mongoengine import *
 
-connect('test')
+connect('test', host='restaurantes_SSBW_db', port=27017)
 
 #Modelos
 class addr(EmbeddedDocument):
