@@ -1,0 +1,26 @@
+{% extends 'restaurantes/main.html' %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+  <h1>Login</h1>
+  <form method="post" action="." class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+    {% endbuttons %}
+
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+  <p>¿No eres un miembro? ¡<a href="{% url 'registration_register' %}">Regístrate</a>!</p>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(function(){
+    $('#nav_login').addClass('active');
+  });
+</script>
+{% endblock %}

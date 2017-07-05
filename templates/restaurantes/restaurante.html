@@ -1,0 +1,24 @@
+{% extends 'restaurantes/main.html' %}
+
+{% load static %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1>{{resta.name}}</h1>
+    <p class="lead">Tipo de cocina: {{resta.cuisine}}</p>
+    <p class="lead">Calle: {{resta.address.street}}</p>
+    <p class="lead">Ciudad: {{resta.address.city}}</p>
+    <p class="lead">Codigo Postal: {{resta.address.zipcode}}</p>
+    <p class="lead">Geolocalización: {{ resta.address.coord.0 }}º, {{ resta.address.coord.1 }}º</p>
+
+    {% if resta.photo %}
+      <img class="restaurant-photo" src="{% static 'img/restaurants/'|add:photo|add:'.jpg' %}" alt="Foto del restaurante {{ resta.name }}">
+    {% else %}
+      <img class="restaurant-photo" src="{% static 'img/no-photo.jpg' %}" alt="Foto del restaurante {{ resta.name }}">
+    {% endif %}
+
+  </div>
+
+  <a href="{{request.META.HTTP_REFERER}}"><button type="button" class="btn btn-default">Volver atrás</button></a>
+
+{% endblock %}

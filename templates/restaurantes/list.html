@@ -1,0 +1,82 @@
+{% extends 'restaurantes/main.html' %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1>{{title}}</h1>
+    {% for r in resta %}
+      <p class="lead">Nombre: <a href="{% url 'restaurante' r.restaurant_id %}">{{ r.name }}</a></p>
+      <p class="lead">Ciudad: {{r.address.city}}</p>
+      <p class="lead">Geolocalización: {{ r.address.coord.0 }}º, {{ r.address.coord.1 }}º</p>
+
+      <button id="launch-modal" type="button" class="btn btn-primary" onclick="functionBoton('{{ r.name }}','{{r.address.coord.0}}','{{r.address.coord.1}}')" data-toggle="modal" data-target="#exampleModal">
+        Mas info
+      </button>
+    </br>
+    {% empty %}
+      <p class="lead">No se encontro ningun restaurante</p>
+    {% endfor %}
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="modal-address"></p>
+          <img style="width:100%;" id="modal-image"></img>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function(){
+  $('#nav_list').addClass('active');
+});
+
+
+function functionBoton(nombre, lat, lng){
+  urlgImage = "https://maps.googleapis.com/maps/api/streetview?"+
+    "size=600x300&"+
+    "location="+lat+","+lng+"&"+
+    "heading=151.78&"+
+    "pitch=-0.76&"+
+    "key=AIzaSyB-tuZZWwGc2Re_GLATnJTmAaRmKnlRYqI";
+
+  urlgGeocode = "https://maps.googleapis.com/maps/api/geocode/json?"+
+  "latlng="+lat+","+lng+"&"+
+  "key=AIzaSyDbMp_WhiP-s9mNZ1qRTXU1Ew3PKieyhe8"
+
+  var address = "";
+
+  $.getJSON( {
+      url  : urlgGeocode,
+      data : {
+          sensor  : false,
+          address : address
+      },
+      success : function( data, textStatus ) {
+          $("#modal-address").text( data.results[1].formatted_address);
+      }
+  } );
+
+  $('#modal-image').attr("src", urlgImage)
+  $('#exampleModalLabel').text(nombre)
+  $("#myModal").modal({show: true});
+
+}
+</script>
+{% endblock %}

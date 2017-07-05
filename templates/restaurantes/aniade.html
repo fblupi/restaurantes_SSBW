@@ -1,0 +1,24 @@
+{% extends 'restaurantes/main.html' %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1>Nuevo restaurante</h1>
+    <form enctype="multipart/form-data" action="{% url 'aniade' %}" method="post" class="form">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+          <button type="submit" class="btn btn-primary">Crear restaurante</button>
+      {% endbuttons %}
+    </form>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(function(){
+    $('#nav_add').addClass('active');
+  });
+</script>
+{% endblock %}
