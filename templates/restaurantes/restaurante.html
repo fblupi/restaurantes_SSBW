@@ -12,9 +12,7 @@
     <p class="lead">Geolocalización: {{ resta.address.coord.0 }}º, {{ resta.address.coord.1 }}º</p>
 
     {% if resta.photo %}
-      <img class="restaurant-photo" src="{% static 'img/restaurants/'|add:photo|add:'.jpg' %}" alt="Foto del restaurante {{ resta.name }}">
-    {% else %}
-      <img class="restaurant-photo" src="{% static 'img/no-photo.jpg' %}" alt="Foto del restaurante {{ resta.name }}">
+      <img class="restaurant-photo" src="http://{{ host }}/images/{{ resta.restaurant_id }}" alt="{{ resta.name }}">
     {% endif %}
 
   </div>

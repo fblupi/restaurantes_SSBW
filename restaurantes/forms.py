@@ -35,11 +35,9 @@ class RestaurantForm(forms.Form):
         r.borough = self.cleaned_data['borough']
         r.address = a
 
-        if self.cleaned_data['photo']:
-            restaurant_photo = open('static/img/restaurants/' + str(restaurants.objects.count() + 1) + '.jpg', 'rb')
-            r.photo.put(restaurant_photo, content_type = 'image/jpeg')
+        if len(request.FILES) != 0:
+            r.photo.put(request.FILES['photo'], content_type = request.FILES['photo'].content_type)
 
-        if commit:
-            r.save()
+        r.save()
 
         return r
