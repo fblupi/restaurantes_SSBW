@@ -23,4 +23,4 @@ class restaurants(Document):
     borough         = StringField()
     address         = EmbeddedDocumentField(addr)
     grades          = ListField(EmbeddedDocumentField(likes))
-    photo           = FileField()
+    photo           = ImageField()
