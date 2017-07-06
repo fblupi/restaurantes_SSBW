@@ -54,7 +54,6 @@ def restaurante(request, id):
 def show_image(request, id):
     r = restaurants.objects(restaurant_id=id)[0]
     image = r.photo.read()
-    logger.info(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S') + " - se ha consultado la imagen del restaurante con id " + str(r.restaurant_id))
     return HttpResponse(image, content_type="image/" + r.photo.format)
 
 @login_required
